@@ -5,3 +5,7 @@ Configuration and sample applications for an virtual Ubuntu cluster
 wget -O deploy.sh http://bit.ly/vc-deploy
 sh deploy.sh
 ```
+
+Link to Comet docs
+
+http://cloudmesh.github.io/client/commands/command_comet.html
