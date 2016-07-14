@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Set up script for a basic Ubuntu 14.04 virtual cluster on Comet
+apt-get update
 
 APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd"
 SERVICES="networking isc-dhcp-server tftpd-hpa inetutils-inetd ssh nfs-kernel-server"
