@@ -33,6 +33,12 @@ do
     /etc/init.d/$i restart
 done
 
+# get netboot files
+mount -t iso9660 /dev/cdrom /media/cdrom
+cp -r /media/cdrom/install/netboot/* /var/lib/tftpboot/
+chown -R nobody:nogroup /var/lib/tftpboot
+umount /media/cdrom
+
 # install Cloudmesh
 $HOME/comet-vc-tutorial/setup-cloudmesh-client-ubuntu-trusty.sh
 
