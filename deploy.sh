@@ -4,7 +4,7 @@
 
 APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd"
 
-sudo apt-get install $APPS -y
+apt-get install $APPS -y
 
 cd $HOME
 git clone https://github.com/sdsc/comet-vc-tutorial.git
@@ -13,10 +13,10 @@ git clone https://github.com/sdsc/comet-vc-tutorial.git
 echo '
 auto eth0
 iface eth0 inet static
-        address 192.168.1.254
+        address 10.0.0.254
         netmask 255.255.255.0
-        network 192.168.1.0
-        broadcast 192.168.1.255
+        network 10.0.0.0
+        broadcast 10.0.0.255
 ' >> /etc/network/interfaces
 ifup eth0
 
@@ -34,9 +34,9 @@ echo 'INTERFACES="eth0"' >> /etc/default/isc-dhcp-server
 service isc-dhcp-server restart
 
 echo '
-subnet 192.168.1.0 netmask 255.255.255.0 {
- range 192.168.1.100 192.168.1.200;
- option routers 192.168.1.254;
+subnet 10.0.0.0 netmask 255.255.255.0 {
+ range 10.0.0.100 10.0.0.200;
+ option routers 10.0.0.254;
  option domain-name-servers 198.202.75.26;
 }
 ' >> /etc/dhcp/dhcpd.conf
@@ -47,7 +47,7 @@ allow booting;
 allow bootp;
 option option-128 code 128 = string;
 option option-129 code 129 = text;
-next-server 192.168.1.254;
+next-server 10.0.0.254;
 filename "pxelinux.0";
 ' >> /etc/dhcp/dhcpd.conf
 
@@ -62,7 +62,7 @@ tftp    dgram   udp    wait    root    /usr/sbin/in.tftpd /usr/sbin/in.tftpd -s 
 
 # firewall rules update
 ufw allow 22/tcp
-ufw allow from 192.168.1.0/24
+ufw allow from 10.0.0.0/24
 ufw disable && ufw enable
 service ssh restart
 
