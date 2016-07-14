@@ -1,0 +1,15 @@
+# D-I config version 2.0
+include ubuntu-installer/amd64/boot-screens/menu.cfg
+default ubuntu-installer/amd64/boot-screens/vesamenu.c32
+prompt 0
+timeout 0
+
+default netinstall
+
+label local
+    localboot 0
+
+label netinstall
+        kernel ubuntu-installer/amd64/linux
+        append auto-install/enable=true priority=critical locale=en_US vga=normal url=http://10.0.0.254/ks.cfg initrd=ubuntu-installer/amd64/initrd.gz netcfg/disable_dhcp=true netcfg/confirm_static=true netcfg/get_ipaddress=$NETIP netcfg/get_netmask=$NETMASK netcfg/get_gateway=$NETGATEWAY netcfg/get_nameservers=$DNS hostname=$NODENAME ramdisk_size=16432 root=/dev/vda/0 rw  --
+
