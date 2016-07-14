@@ -2,7 +2,7 @@
 
 # Set up script for a basic Ubuntu 14.04 virtual cluster on Comet
 
-APPS="python-dev libffi-dev libssl-dev gcc git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd"
+APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd"
 SERVICES="networking isc-dhcp-server tftpd-hpa inetutils-inetd ssh nfs-kernel-server"
 
 apt-get install $APPS -y
@@ -38,10 +38,6 @@ for i in $SERVICES
 do
     /etc/init.d/$i restart
 done
-
-
-# install Cloudmesh
-$HOME/comet-vc-tutorial/setup-cloudmesh-client-ubuntu-trusty.sh
 
 # we have to run the script with sudo, or sudo su - before calling it,
 # thus, the $HOME would be /root
