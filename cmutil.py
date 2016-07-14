@@ -201,7 +201,7 @@ if __name__ == "__main__":
     commands = ['nodesfile', 'pxefile', 'setkey', 'setpassword', 'setboot', 'addhosts', 'setknownhosts']
     if len(argv) >= 1:
         cmd = argv[0]
-        cluster == ''
+        cluster = ''
         if len(argv) > 1:
             cluster = argv[1]
         if cmd in commands:
