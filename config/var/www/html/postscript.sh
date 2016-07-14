@@ -7,7 +7,7 @@ $PUBLICKEY
 PUBLIC_KEY
 chmod 600 .ssh/authorized_keys
 sed -i '/home/d' /etc/fstab
-echo '192.168.1.254:/home /home nfs defaults 0 0' >> /etc/fstab
+echo '10.0.0.254:/home /home nfs defaults 0 0' >> /etc/fstab
 #sed -i 's/ens3/eth0/' /etc/network/interfaces
 echo 'mlx4_ib
 ib_umad

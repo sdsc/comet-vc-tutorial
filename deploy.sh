@@ -2,7 +2,8 @@
 
 # Set up script for a basic Ubuntu 14.04 virtual cluster on Comet
 
-APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd"
+APPS="python-dev libffi-dev libssl-dev gcc git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd"
+SERVICES="networking isc-dhcp-server tftpd-hpa inetutils-inetd ssh"
 
 apt-get install $APPS -y
 
@@ -27,10 +28,16 @@ iface eth0 inet static
 ifup eth0
 
 sysctl -p
-/etc/init.d/networking restart
-/etc/init.d/isc-dhcp-server restart
-/etc/init.d/tftpd-hpa restart
-/etc/init.d/ ssh restart
+for i in $SERVICES
+do
+    /etc/init.d/$i restart
+done
+
+# install Cloudmesh
+$HOME/comet-vc-tutorial/setup-cloudmesh-client-ubuntu-trusty.sh
+
+# clean up any permissions issues caused by Cloudmesh install as root
+chown -R $USER:$USER /home/$USER
 
 python cmutil.py pxefile $HOSTNAME
 python cmutil.py setkey

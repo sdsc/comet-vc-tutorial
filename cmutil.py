@@ -28,7 +28,7 @@ def generate_nodesfile(vcname, subnet=None):
         print >> f, "NTP:", frontend["ntp"]
     nodes = nodesobj[0]['computes']
     if not subnet:
-        subnet = "192.168.1."
+        subnet = "10.0.0."
     ip_idx = 0
     with open('vcnodes_{}.txt'.format(vcname), 'w') as f:
         for node in nodes:
@@ -69,7 +69,7 @@ def generate_pxefile(nodesfile=None, netfile=None, vc=None):
                             '$NODENAME':name,
                             '$NETMASK':netconfs["MASK"],
                             #'$NETGATEWAY':netconfs["GATEWAY"],
-                            '$NETGATEWAY':"192.168.1.254",
+                            '$NETGATEWAY':"10.0.0.254",
                             "$DNS":netconfs["DNS"]}
             #print (replacements)
             with open('/var/lib/tftpboot/pxelinux.cfg/{}'.format(filename), 'w') as outfile:
