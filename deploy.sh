@@ -7,7 +7,7 @@
 apt-get update
 
 # Define additional packages to install and services to restart
-APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd"
+APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd nfs-kernel-server"
 SERVICES="networking isc-dhcp-server tftpd-hpa inetutils-inetd ssh nfs-kernel-server"
 
 # Install needed packages
@@ -16,6 +16,7 @@ apt-get install $APPS -y
 # Get the repo with the config files and examples
 cd $HOME
 git clone https://github.com/sdsc/comet-vc-tutorial.git
+chown $USER:$USER $HOME/comet-vc-tutorial
 
 # get netboot files
 mount -t iso9660 /dev/cdrom /media/cdrom
@@ -49,6 +50,6 @@ do
 done
 
 # Create configs requiring cluster MACs
-python cmutil.py pxefile $HOSTNAME
-python cmutil.py setkey
-python cmutil.py setpassword
+python $HOME/comet-vc-tutorial/cmutil.py pxefile $HOSTNAME
+python $HOME/comet-vc-tutorial/cmutil.py setkey
+python $HOME/comet-vc-tutorial/cmutil.py setpassword
