@@ -67,7 +67,8 @@ def generate_pxefile(nodesfile=None, netfile=None, vc=None):
             #print (filename)
             replacements = {'$NETIP':ip,
                             '$NODENAME':name,
-                            '$NETMASK':netconfs["MASK"],
+                            #'$NETMASK':netconfs["MASK"],
+                            '$NETMASK':"255.255.255.0",
                             #'$NETGATEWAY':netconfs["GATEWAY"],
                             '$NETGATEWAY':"10.0.0.254",
                             "$DNS":netconfs["DNS"]}
