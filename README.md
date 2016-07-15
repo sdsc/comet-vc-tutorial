@@ -14,19 +14,18 @@ cluster.
 * Install an Ubuntu front end following the tutorial.
 * Generate networking information using [cmutil.py](cmutil.py) and
 send to front end.
+
+ ```
+ wget http://bit.ly/vc-cmutil
+ python cmutil.py nodesfile
+ scp vcn*.txt <USER>@vct<##>.sdsc.edu:~/
+ ```
 * Get the [deploy.sh](deploy.sh) script and configure the front end.
+
+ ```bash
+ wget -O deploy.sh http://bit.ly/vc-deployment
+ chmod +x deploy.sh
+ sudo ./deploy.sh
+ ```
 * Power on the compute nodes to install.
-
-```
-wget http://bit.ly/vc-cmutil
-python cmutil.py nodesfile
-scp vcn*.txt <USER>@vct<##>.sdsc.edu:~/
-```
-
-```bash
-wget -O deploy.sh http://bit.ly/vc-deployment
-chmod +x deploy.sh
-sudo ./deploy.sh
-```
-
 
