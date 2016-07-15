@@ -30,16 +30,6 @@ cp -rf $HOME/comet-vc-tutorial/config/var/* /var/
 
 # configure the internal NIC and set iptables rules
 iptables-restore < /etc/iptables.rules
-echo '
-        pre-up iptables-restore < /etc/iptables.rules
-
-auto eth0
-iface eth0 inet static
-        address 10.0.0.254
-        netmask 255.255.255.0
-        network 10.0.0.0
-        broadcast 10.0.0.255
-' >> /etc/network/interfaces
 ifup eth0
 
 # Restart services to get new configurations
