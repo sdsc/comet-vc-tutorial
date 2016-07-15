@@ -180,8 +180,8 @@ def setknownhosts(nodesfile=None, vc=None):
             os.system("ssh-keyscan -H {} >> {}".format(ip, "{}/.ssh/known_hosts".format(get_sudouser_home())))
             os.system("ssh-keyscan -H {} >> {}".format(name, "{}/.ssh/known_hosts".format(get_sudouser_home())))
     for ip in ips:
-        os.system("scp {} root@{}:/root/.ssh/".format("{}/.ssh/known_hosts".format(get_sudouser_home(), ip))
-        os.system("scp {} root@{}:/root/.ssh/".format("{}/.ssh/id_rsa".format(get_sudouser_home(), ip))
+        os.system("scp {}/.ssh/known_hosts root@{}:/root/.ssh/".format(get_sudouser_home(), ip))
+        os.system("scp {}/.ssh/id_rsa root@{}:/root/.ssh/".format(get_sudouser_home(), ip))
         os.system("echo '{}' | ssh root@{} 'cat >> /etc/hosts'".format(iphosts, ip))
 
 # sudo cmutil.py still gets the unprivileged user directory, which breaks
