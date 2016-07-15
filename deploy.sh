@@ -16,7 +16,7 @@ apt-get install $APPS -y
 # Get the repo with the config files and examples
 cd $HOME
 git clone https://github.com/sdsc/comet-vc-tutorial.git
-chown -R $USER:$USER $HOME/comet-vc-tutorial
+chown -R $SUDO_USER:$SUDO_USER $HOME/comet-vc-tutorial
 
 # get netboot files
 mount -t iso9660 /dev/cdrom /media/cdrom
