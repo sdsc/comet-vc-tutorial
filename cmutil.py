@@ -130,7 +130,7 @@ def addhosts(nodesfile=None, vc=None):
             name = row[0]
             mac = row[1]
             ip = row[2].strip("\n")
-            print >> hostfile, "{}\t{}".format(ip, name)
+            print >> hostfile, "{}\t{}.local {}".format(ip, name, name)
 
 def setpassword():
     print ("Type the root password for the computenodes:")
@@ -237,9 +237,9 @@ if __name__ == "__main__":
                         netboot = False
                     setboot(node, vc=cluster, net=netboot)
             elif cmd == 'addhosts':
-                addhosts(vc='vc2')
+                addhosts(vc=cluster)
             elif cmd == 'setknownhosts':
-                setknownhosts(vc="vc2")
+                setknownhosts(vc=cluster)
             else:
                 usage()
         else:
