@@ -145,7 +145,7 @@ def setpassword():
 # before installing the compute nodes
 def setkey():
     os.system("ssh-keygen")
-    keyfile = os.path.expanduser("~/.ssh/id_rsa.pub")
+    keyfile = ("{}/.ssh/id_rsa.pub").format(get_sudouser_home())
     key = ''
     with open(keyfile) as f:
         key = f.readline().strip("\n")
@@ -177,12 +177,22 @@ def setknownhosts(nodesfile=None, vc=None):
             ip = row[2].strip("\n")
             ips.append(ip)
             iphosts += "{}\t{}\n".format(ip, name)
-            os.system("ssh-keyscan -H {} >> {}".format(ip, os.path.expanduser("~/.ssh/known_hosts")))
-            os.system("ssh-keyscan -H {} >> {}".format(name, os.path.expanduser("~/.ssh/known_hosts")))
+            os.system("ssh-keyscan -H {} >> {}".format(ip, "{}/.ssh/known_hosts".format(get_sudouser_home())))
+            os.system("ssh-keyscan -H {} >> {}".format(name, "{}/.ssh/known_hosts".format(get_sudouser_home())))
     for ip in ips:
-        os.system("scp {} root@{}:/root/.ssh/".format(os.path.expanduser("~/.ssh/known_hosts"), ip))
-        os.system("scp {} root@{}:/root/.ssh/".format(os.path.expanduser("~/.ssh/id_rsa"), ip))
+        os.system("scp {} root@{}:/root/.ssh/".format("{}/.ssh/known_hosts".format(get_sudouser_home(), ip))
+        os.system("scp {} root@{}:/root/.ssh/".format("{}/.ssh/id_rsa".format(get_sudouser_home(), ip))
         os.system("echo '{}' | ssh root@{} 'cat >> /etc/hosts'".format(iphosts, ip))
+
+# sudo cmutil.py still gets the unprivileged user directory, which breaks
+# ssh key location
+def get_sudouser_home():
+    home = ""
+    if 'root' == os.getenv("USER"):
+        home = "/root"
+    else:
+        home = os.path.expanduser("~")
+    return home
 
 def usage():
     usagestr = "Usage:\n"\
