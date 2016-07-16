@@ -59,7 +59,7 @@ cat >> /var/www/html/postscript.sh <<EOT
 # Create ib0 definition
 echo -e "\n# The Infiniband network interface\nauto ib0" >> /etc/network/interfaces
 grep "iface eth0" /etc/network/interfaces -A5 | \
-    sed 's/eth0/iface ib0/g;s/10\.0\./10\.27\./g' >> /etc/network/interfaces
+    sed 's/iface eth0/iface ib0/g;s/10\.0\.0\./10\.0\.1\./g' >> /etc/network/interfaces
 EOT
 
 exit 0
