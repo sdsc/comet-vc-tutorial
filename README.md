@@ -20,6 +20,13 @@ send to front end.
  python cmutil.py nodesfile
  scp vcn*.txt <USER>@vct<##>.sdsc.edu:~/
  ```
+* If you're on a Mac, use cURL instead of `wget` for the first command.
+
+ ```
+ curl -L http://bit.ly/vc-cmutil -o cmutil.py
+ ```
+ 
+ 
 * Get the [deploy.sh](deploy.sh) script and configure the front end.
 
  ```bash
