@@ -4,7 +4,8 @@
 # Call using sudo sh deploy.sh
 
 # Update system
-apt-get update
+apt-get update -y
+apt-get upgrade -y
 
 # Define additional packages to install and services to restart
 APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd nfs-kernel-server"
@@ -43,3 +44,22 @@ done
 python $HOME/comet-vc-tutorial/cmutil.py pxefile $HOSTNAME
 python $HOME/comet-vc-tutorial/cmutil.py setkey
 python $HOME/comet-vc-tutorial/cmutil.py setpassword
+
+# Add priviledged user creation to postscript.sh
+EXTRA_GROUPS=$(grep $SUDO_USER /etc/group | cut -d: -f1 | grep -v $SUDO_USER | egrep -v "lpadmin|sambashare" | tr '\n' ',' | sed 's/,$/\n/g')
+cat >> /var/www/html/postscript.sh <<End-of-message
+
+# Add privileged user
+groupadd -g $SUDO_GID $SUDO_USER
+useradd -c "$SUDO_USER,,," -g $SUDO_GID -G $EXTRA_GROUPS -M -s /bin/bash -u $SUDO_UID $SUDO_USER
+End-of-message
+
+cat >> /var/www/html/postscript.sh <<EOT
+
+# Create ib0 definition
+echo -e "\n# The Infiniband network interface\nauto ib0" >> /etc/network/interfaces
+grep "iface eth0" /etc/network/interfaces -A5 | \
+    sed 's/eth0/iface ib0/g;s/10\.0\./10\.27\./g' >> /etc/network/interfaces
+EOT
+
+exit 0

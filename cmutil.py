@@ -130,7 +130,7 @@ def addhosts(nodesfile=None, vc=None):
             name = row[0]
             mac = row[1]
             ip = row[2].strip("\n")
-            print >> hostfile, "{}\t{}".format(ip, name)
+            print >> hostfile, "{}\t{}.local {}".format(ip, name, name)
 
 def setpassword():
     print ("Type the root password for the computenodes:")
@@ -178,8 +178,8 @@ def setknownhosts(nodesfile=None, vc=None):
             ip = row[2].strip("\n")
             ips.append(ip)
             iphosts += "{}\t{}\n".format(ip, name)
-            os.system("ssh-keyscan -H {} >> {}".format(ip, "{}/.ssh/known_hosts".format(get_sudouser_home())))
-            os.system("ssh-keyscan -H {} >> {}".format(name, "{}/.ssh/known_hosts".format(get_sudouser_home())))
+            os.system("ssh-keyscan -H {} >> {} 2>/dev/null".format(ip, "{}/.ssh/known_hosts".format(get_sudouser_home())))
+            os.system("ssh-keyscan -H {} >> {} 2>/dev/null".format(name, "{}/.ssh/known_hosts".format(get_sudouser_home())))
     for ip in ips:
         os.system("scp {}/.ssh/known_hosts root@{}:/root/.ssh/".format(get_sudouser_home(), ip))
         os.system("scp {}/.ssh/id_rsa root@{}:/root/.ssh/".format(get_sudouser_home(), ip))
@@ -237,9 +237,9 @@ if __name__ == "__main__":
                         netboot = False
                     setboot(node, vc=cluster, net=netboot)
             elif cmd == 'addhosts':
-                addhosts(vc='vc2')
+                addhosts(vc=cluster)
             elif cmd == 'setknownhosts':
-                setknownhosts(vc="vc2")
+                setknownhosts(vc=cluster)
             else:
                 usage()
         else:
