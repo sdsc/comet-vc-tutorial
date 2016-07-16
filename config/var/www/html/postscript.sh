@@ -15,13 +15,6 @@ ib_ipoib
 ib_cm
 ib_ucm
 rdma_ucm' >> /etc/modules
-echo '
-#auto ib0
-#iface ib0 inet static
-#    address 10.27.0.1
-#    netmask 255.255.255.0
-#    network 10.27.0.0
-#    broadcast 10.27.0.255' >> /etc/network/interfaces
 
 #sed -i '/^ubuntu/d' /etc/group
 #echo 'ubuntu:x:1001:' >> /etc/group

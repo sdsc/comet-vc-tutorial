@@ -54,4 +54,12 @@ groupadd -g $SUDO_GID $SUDO_USER
 useradd -c "$SUDO_USER,,," -g $SUDO_GID -G $EXTRA_GROUPS -M -s /bin/bash -u $SUDO_UID $SUDO_USER
 End-of-message
 
+cat >> /var/www/html/postscript.sh <<EOT
+
+# Create ib0 definition
+echo -e "\n# The Infiniband network interface\nauto ib0" >> /etc/network/interfaces
+grep "iface eth0" /etc/network/interfaces -A5 | \
+    sed 's/eth0/iface ib0/g;s/10\.0\./10\.27\./g' >> /etc/network/interfaces
+EOT
+
 exit 0
