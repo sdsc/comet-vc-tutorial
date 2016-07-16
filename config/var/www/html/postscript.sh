@@ -42,8 +42,7 @@ iface ib0 inet static
     netmask 255.255.255.0
     network 10.0.27.0
     broadcast 10.0.27.255
-
-post-up echo connected > /sys/class/net/ib0/mode
-post-up /sbin/ifconfig ib0 mtu 4092
+    post-up echo connected > /sys/class/net/ib0/mode
+    post-up /sbin/ifconfig ib0 mtu 4092
 
 EOT
