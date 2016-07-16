@@ -1,0 +1,11 @@
+127.0.0.1       localhost
+10.0.0.254      vct01
+10.0.0.1        vm-vct01-00
+10.0.0.2        vm-vct01-01
+10.0.1.1        vm-vct01-00-ib
+10.0.1.2        vm-vct01-01-ib
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters

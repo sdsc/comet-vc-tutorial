@@ -32,3 +32,5 @@ echo  '
 *   -   memlock     -1
 *   -   stack       -1
 *   -   nofile      8192' >> /etc/security/limits.conf
+
+wget -O /etc/hosts http://10.0.0.254/hosts
