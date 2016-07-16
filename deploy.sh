@@ -35,6 +35,12 @@ umount /media/cdrom
 cp -rf $HOME/comet-vc-tutorial/config/etc/* /etc/
 cp -rf $HOME/comet-vc-tutorial/config/var/* /var/
 
+# Modify hosts config
+PUBIP=$(ip addr show eth1 | awk '/ inet / {print $2}' | cut -d\/ -f1)
+for f in /etc/hosts /var/www/html/hosts; do
+    sed -i 's,HOSTNAME,'"${HOSTNAME}"',g;s,PUBIP,'"${PUBIP}"',' $f
+done
+
 # configure the internal NIC and set iptables rules
 iptables-restore < /etc/iptables.rules
 ifup eth0

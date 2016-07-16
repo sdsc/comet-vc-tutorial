@@ -1,8 +1,9 @@
 127.0.0.1	localhost
-127.0.1.1	vct01.sdsc.edu	vct01
-10.0.0.254   vct01
-10.0.0.1     vm-vct01-00
-10.0.0.2     vm-vct01-01
+PUBIP	HOSTNAME.sdsc.edu	HOSTNAME
+
+10.0.0.254	HOSTNAME
+10.0.0.1	vm-HOSTNAME-00
+10.0.0.2	vm-HOSTNAME-01
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
