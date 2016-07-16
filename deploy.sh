@@ -8,7 +8,7 @@ apt-get update -y
 apt-get upgrade -y
 
 # Define additional packages to install and services to restart
-APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd nfs-kernel-server"
+APPS="git apache2 tftpd-hpa isc-dhcp-server inetutils-inetd nfs-kernel-server emacs24-nox"
 SERVICES="networking isc-dhcp-server tftpd-hpa inetutils-inetd ssh nfs-kernel-server"
 
 # Install needed packages
@@ -20,9 +20,15 @@ git clone https://github.com/sdsc/comet-vc-tutorial.git
 chown -R $SUDO_USER:$SUDO_USER $HOME/comet-vc-tutorial
 
 # get netboot files
+cd /var/lib/tftpboot
+wget http://us.archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/netboot.tar.gz
+tar -zxf netboot.tar.gz
+cd $HOME
+
+# create local repo
 mount -t iso9660 /dev/cdrom /media/cdrom
-cp -r /media/cdrom/install/netboot/* /var/lib/tftpboot/
-chown -R nobody:nogroup /var/lib/tftpboot
+mkdir /var/www/html/ubuntu
+cp -r /media/cdrom/* /var/www/html/ubuntu/
 umount /media/cdrom
 
 # Deploy config
@@ -53,13 +59,5 @@ cat >> /var/www/html/postscript.sh <<End-of-message
 groupadd -g $SUDO_GID $SUDO_USER
 useradd -c "$SUDO_USER,,," -g $SUDO_GID -G $EXTRA_GROUPS -M -s /bin/bash -u $SUDO_UID $SUDO_USER
 End-of-message
-
-cat >> /var/www/html/postscript.sh <<EOT
-
-# Create ib0 definition
-echo -e "\n# The Infiniband network interface\nauto ib0" >> /etc/network/interfaces
-grep "iface eth0" /etc/network/interfaces -A5 | \
-    sed 's/iface eth0/iface ib0/g;s/10\.0\.0\./10\.0\.27\./g' >> /etc/network/interfaces
-EOT
 
 exit 0
