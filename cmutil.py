@@ -178,8 +178,8 @@ def setknownhosts(nodesfile=None, vc=None):
             ip = row[2].strip("\n")
             ips.append(ip)
             iphosts += "{}\t{}\n".format(ip, name)
-            os.system("ssh-keyscan -H {} >> {}".format(ip, "{}/.ssh/known_hosts".format(get_sudouser_home())))
-            os.system("ssh-keyscan -H {} >> {}".format(name, "{}/.ssh/known_hosts".format(get_sudouser_home())))
+            os.system("ssh-keyscan -H {} >> {} 2>/dev/null".format(ip, "{}/.ssh/known_hosts".format(get_sudouser_home())))
+            os.system("ssh-keyscan -H {} >> {} 2>/dev/null".format(name, "{}/.ssh/known_hosts".format(get_sudouser_home())))
     for ip in ips:
         os.system("scp {}/.ssh/known_hosts root@{}:/root/.ssh/".format(get_sudouser_home(), ip))
         os.system("scp {}/.ssh/id_rsa root@{}:/root/.ssh/".format(get_sudouser_home(), ip))
