@@ -27,22 +27,12 @@ echo  '
 *   -   nofile      8192' >> /etc/security/limits.conf
 
 wget -O /etc/hosts http://10.0.0.254/hosts
+wget -O /root/firstboot.sh http://10.0.0.254/firstboot.sh
+wget -O /etc/rc.local http://10.0.0.254/rc.local
+chmod +x /etc/rc.local /root/firstboot.sh
 
-# Create ib0 definition
-PRIV_IP=$(ip addr show eth0 | awk '/ inet / {print $2}' | cut -d\/ -f1)
-IB_LQ=$(echo $PRIV_IP | cut -d\. -f4)
-IB_IP="10.0.27.${IB_LQ}"
+# Add privileged user
+groupadd -g 1000 vctrain03
+useradd -c "vctrain03,,," -g 1000 -G adm,cdrom,sudo,dip,plugdev -M -s /bin/bash -u 1000 vctrain03
 
-cat >> /etc/network/interfaces <<EOT
-
-# The Infiniband interface
-auto ib0
-iface ib0 inet static
-    address ${IB_IP}
-    netmask 255.255.255.0
-    network 10.0.27.0
-    broadcast 10.0.27.255
-    post-up echo connected > /sys/class/net/ib0/mode
-    post-up /sbin/ifconfig ib0 mtu 4092
-
-EOT
+exit 0
