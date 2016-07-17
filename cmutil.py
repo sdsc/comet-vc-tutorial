@@ -10,6 +10,7 @@ import csv
 
 import ast
 from getpass import getpass
+from hashlib import md5
 
 def generate_nodesfile(vcname, subnet=None):
 
@@ -134,7 +135,7 @@ def addhosts(nodesfile=None, vc=None):
 
 def setpassword():
     print ("Type the root password for the computenodes:")
-    password = getpass()
+    password = md5(getpass()).hexdigest()
     ksfile = "/var/www/html/ks.cfg"
     with open(ksfile) as infile:
         lines = infile.readlines()
