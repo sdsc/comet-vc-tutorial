@@ -31,8 +31,3 @@ wget -O /root/firstboot.sh http://10.0.0.254/firstboot.sh
 wget -O /etc/rc.local http://10.0.0.254/rc.local
 chmod +x /etc/rc.local /root/firstboot.sh
 
-# Add privileged user
-groupadd -g 1000 vctrain03
-useradd -c "vctrain03,,," -g 1000 -G adm,cdrom,sudo,dip,plugdev -M -s /bin/bash -u 1000 vctrain03
-
-exit 0

@@ -64,6 +64,7 @@ cat >> /var/www/html/postscript.sh <<End-of-message
 # Add privileged user
 groupadd -g $SUDO_GID $SUDO_USER
 useradd -c "$SUDO_USER,,," -g $SUDO_GID -G $EXTRA_GROUPS -M -s /bin/bash -u $SUDO_UID $SUDO_USER
+exit 0
 End-of-message
 
 exit 0
