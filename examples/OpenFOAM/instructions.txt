@@ -1,0 +1,43 @@
+[1] On each compute node run:
+apt install software-properties-common
+add-apt-repository http://download.openfoam.org/ubuntu
+apt-get update
+apt-get install openfoam4
+
+(Note these involve some questions - say yes to them)
+
+[2] Add the following to your .bashrc:
+
+. /opt/openfoam4/etc/bashrc
+
+[3] Benchmarking file/directory setup:
+
+mkdir -p $FOAM_RUN
+cd $FOAM_RUN
+cp -r $FOAM_TUTORIALS/multiphase/interFoam/laminar/damBreak/damBreak .
+foamCloneCase damBreak damBreakFine
+cd damBreakFine
+cp ~/OFInstall/blockMeshDict system/
+cp ~/OFInstall/decomposeParDict system/
+
+[4] Setup mesh and initial conditions:
+blockMesh
+cp -r 0/alpha.water.orig 0/alpha.water
+setFields
+
+[5] Decompose the mesh:
+decomposePar
+
+[6] Create hostfile (hosts.txt) and run the code. For example hosts.txt has:
+echo "vm-vct16-00 slots=24" > hosts.txt
+echo "vm-vct16-01 slots=24" >> hosts.txt
+mpirun  -hostfile ./hosts.txt -np 48 `which foamExec` interFoam -parallel
+
+Optional: Run Paraview
+
+ssh -X username@vctxx.sdsc.edu 
+ssh -X vm-vctxx-yy 
+cd $FOAM_RUN/damBreakFine
+paraFoam -case processor1
+
+
